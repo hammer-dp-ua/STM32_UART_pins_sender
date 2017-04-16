@@ -168,16 +168,6 @@ void Pins_Config() {
    GPIO_Init(GPIOB, &ports_default_config);
 
    GPIO_Init(GPIOF, &ports_default_config);
-
-   // For USART1
-   GPIO_InitTypeDef usart_pins_config;
-   usart_pins_config.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_10;
-   usart_pins_config.GPIO_PuPd = GPIO_PuPd_NOPULL;
-   usart_pins_config.GPIO_Mode = GPIO_Mode_AF;
-   usart_pins_config.GPIO_OType = GPIO_OType_OD;
-   GPIO_Init(GPIOA, &usart_pins_config);
-   GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_1);
-   GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_1);
 }
 
 /**
@@ -248,6 +238,16 @@ void DMA_Config() {
 }
 
 void USART_Config() {
+   // For USART1
+   GPIO_InitTypeDef usart_pins_config;
+   usart_pins_config.GPIO_Pin = GPIO_Pin_9;
+   usart_pins_config.GPIO_PuPd = GPIO_PuPd_NOPULL;
+   usart_pins_config.GPIO_Mode = GPIO_Mode_AF;
+   usart_pins_config.GPIO_OType = GPIO_OType_PP;
+   GPIO_Init(GPIOA, &usart_pins_config);
+   GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_1);
+   //GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_1);
+
    RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 
    USART_OverSampling8Cmd(USART1, DISABLE);
@@ -258,10 +258,10 @@ void USART_Config() {
    USART_InitStructure.USART_StopBits = USART_StopBits_1;
    USART_InitStructure.USART_Parity = USART_Parity_No;
    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-   USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+   USART_InitStructure.USART_Mode = USART_Mode_Tx;
    USART_Init(USART1, &USART_InitStructure);
 
-   USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+   //USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
    USART_ITConfig(USART1, USART_IT_ERR, ENABLE);
 
    NVIC_SetPriority(DMA1_Channel2_3_IRQn, 11);
