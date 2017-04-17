@@ -20,6 +20,7 @@ void SysTick_Handler() {
 
 void DMA1_Channel2_3_IRQHandler() {
    DMA_ClearITPendingBit(DMA1_IT_TC2);
+   set_flag(&general_flags_g, USART_TRANSFER_COMPLETE_FLAG);
 }
 
 void DMA1_Channel1_IRQHandler() {
@@ -81,11 +82,11 @@ void EXTI4_15_IRQHandler() {
    } else if (EXTI_GetITStatus(MW_LED_1_EXTI_LINE)) {
       EXTI_ClearITPendingBit(MW_LED_1_EXTI_LINE);
       set_pin_interrupt_flag(MW_LED_1_PIN_INTERRUPT_FLAG);
-   } else if (EXTI_GetITStatus(PIR_LED_2_EXTI_LINE)) {
-      EXTI_ClearITPendingBit(PIR_LED_2_EXTI_LINE);
+   } else if (EXTI_GetITStatus(PIR_LED_3_EXTI_LINE)) {
+      EXTI_ClearITPendingBit(PIR_LED_3_EXTI_LINE);
       set_pin_interrupt_flag(PIR_LED_3_PIN_INTERRUPT_FLAG);
-   } else if (EXTI_GetITStatus(MW_LED_2_EXTI_LINE)) {
-      EXTI_ClearITPendingBit(MW_LED_2_EXTI_LINE);
+   } else if (EXTI_GetITStatus(MW_LED_3_EXTI_LINE)) {
+      EXTI_ClearITPendingBit(MW_LED_3_EXTI_LINE);
       set_pin_interrupt_flag(MW_LED_3_PIN_INTERRUPT_FLAG);
    }
 }
@@ -131,35 +132,59 @@ int main() {
    timer3_confing();
    timer14_confing();
 
-   while (1) {
-      if (pins_interrupts_flags_g && !pins_interrupts_timer_g) {
-         if (read_flag(pins_interrupts_flags_g, MOTION_SENSOR_1_PIN_INTERRUPT_FLAG) &&
-               GPIO_ReadInputDataBit(MOTION_SENSOR_1_PORT, MOTION_SENSOR_1_PIN)) {
-            send_usard_data("pin:MOTION_SENSOR_1");
-         } else if (read_flag(pins_interrupts_flags_g, MOTION_SENSOR_3_PIN_INTERRUPT_FLAG) &&
-               GPIO_ReadInputDataBit(MOTION_SENSOR_3_PORT, MOTION_SENSOR_3_PIN)) {
-            send_usard_data("pin:MOTION_SENSOR_3");
-         } else if (read_flag(pins_interrupts_flags_g, IMMOBILIZER_LED_PIN_INTERRUPT_FLAG) &&
-               GPIO_ReadInputDataBit(IMMOBILIZER_LED_PORT, IMMOBILIZER_LED_PIN)) {
-            send_usard_data("pin:IMMOBILIZER_LED");
-         } else if (read_flag(pins_interrupts_flags_g, MOTION_SENSOR_2_PIN_INTERRUPT_FLAG) &&
-               GPIO_ReadInputDataBit(MOTION_SENSOR_2_PORT, MOTION_SENSOR_2_PIN)) {
-            send_usard_data("pin:MOTION_SENSOR_2");
-         } else if (read_flag(pins_interrupts_flags_g, PIR_LED_1_PIN_INTERRUPT_FLAG) &&
-               !GPIO_ReadInputDataBit(PIR_LED_1_PORT, PIR_LED_1_PIN)) {
-            send_usard_data("pin:PIR_LED_1");
-         } else if (read_flag(pins_interrupts_flags_g, MW_LED_1_PIN_INTERRUPT_FLAG) &&
-               !GPIO_ReadInputDataBit(MW_LED_1_PORT, MW_LED_1_PIN)) {
-            send_usard_data("pin:MW_LED_1");
-         } else if (read_flag(pins_interrupts_flags_g, PIR_LED_3_PIN_INTERRUPT_FLAG) &&
-               !GPIO_ReadInputDataBit(PIR_LED_3_PORT, PIR_LED_3_PIN)) {
-            send_usard_data("pin:PIR_LED_3");
-         } else if (read_flag(pins_interrupts_flags_g, MW_LED_3_PIN_INTERRUPT_FLAG) &&
-               !GPIO_ReadInputDataBit(MW_LED_3_PORT, MW_LED_3_PIN)) {
-            send_usard_data("pin:MW_LED_3");
-         }
+   set_flag(&general_flags_g, USART_TRANSFER_COMPLETE_FLAG);
 
-         pins_interrupts_flags_g = 0;
+   while (1) {
+      if (pins_interrupts_flags_g && !pins_interrupts_timer_g && read_flag(general_flags_g, USART_TRANSFER_COMPLETE_FLAG)) {
+         if (read_flag(pins_interrupts_flags_g, MOTION_SENSOR_1_PIN_INTERRUPT_FLAG)) {
+            reset_flag(&pins_interrupts_flags_g, MOTION_SENSOR_1_PIN_INTERRUPT_FLAG);
+
+            if (GPIO_ReadInputDataBit(MOTION_SENSOR_1_PORT, MOTION_SENSOR_1_PIN)) {
+               send_usard_data("pin:MOTION_SENSOR_1");
+            }
+         } else if (read_flag(pins_interrupts_flags_g, MOTION_SENSOR_3_PIN_INTERRUPT_FLAG)) {
+            reset_flag(&pins_interrupts_flags_g, MOTION_SENSOR_3_PIN_INTERRUPT_FLAG);
+
+            if (GPIO_ReadInputDataBit(MOTION_SENSOR_3_PORT, MOTION_SENSOR_3_PIN)) {
+               send_usard_data("pin:MOTION_SENSOR_3");
+            }
+         } else if (read_flag(pins_interrupts_flags_g, IMMOBILIZER_LED_PIN_INTERRUPT_FLAG)) {
+            reset_flag(&pins_interrupts_flags_g, IMMOBILIZER_LED_PIN_INTERRUPT_FLAG);
+
+            if (GPIO_ReadInputDataBit(IMMOBILIZER_LED_PORT, IMMOBILIZER_LED_PIN)) {
+               send_usard_data("pin:IMMOBILIZER_LED");
+            }
+         } else if (read_flag(pins_interrupts_flags_g, MOTION_SENSOR_2_PIN_INTERRUPT_FLAG)) {
+            reset_flag(&pins_interrupts_flags_g, MOTION_SENSOR_2_PIN_INTERRUPT_FLAG);
+
+            if (GPIO_ReadInputDataBit(MOTION_SENSOR_2_PORT, MOTION_SENSOR_2_PIN)) {
+               send_usard_data("pin:MOTION_SENSOR_2");
+            }
+         } else if (read_flag(pins_interrupts_flags_g, PIR_LED_1_PIN_INTERRUPT_FLAG)) {
+            reset_flag(&pins_interrupts_flags_g, PIR_LED_1_PIN_INTERRUPT_FLAG);
+
+            if (!GPIO_ReadInputDataBit(PIR_LED_1_PORT, PIR_LED_1_PIN)) {
+               send_usard_data("pin:PIR_LED_1");
+            }
+         } else if (read_flag(pins_interrupts_flags_g, MW_LED_1_PIN_INTERRUPT_FLAG)) {
+            reset_flag(&pins_interrupts_flags_g, MW_LED_1_PIN_INTERRUPT_FLAG);
+
+            if (!GPIO_ReadInputDataBit(MW_LED_1_PORT, MW_LED_1_PIN)) {
+               send_usard_data("pin:MW_LED_1");
+            }
+         } else if (read_flag(pins_interrupts_flags_g, PIR_LED_3_PIN_INTERRUPT_FLAG)) {
+            reset_flag(&pins_interrupts_flags_g, PIR_LED_3_PIN_INTERRUPT_FLAG);
+
+            if (!GPIO_ReadInputDataBit(PIR_LED_3_PORT, PIR_LED_3_PIN)) {
+               send_usard_data("pin:PIR_LED_3");
+            }
+         } else if (read_flag(pins_interrupts_flags_g, MW_LED_3_PIN_INTERRUPT_FLAG)) {
+            reset_flag(&pins_interrupts_flags_g, MW_LED_3_PIN_INTERRUPT_FLAG);
+
+            if (!GPIO_ReadInputDataBit(MW_LED_3_PORT, MW_LED_3_PIN)) {
+               send_usard_data("pin:MW_LED_3");
+            }
+         }
       }
    }
 }
@@ -235,7 +260,7 @@ void pins_config() {
    motion_sensors_pir_and_mw_pins_config.GPIO_Pin = PIR_LED_1_PIN;
    motion_sensors_pir_and_mw_pins_config.GPIO_Mode = GPIO_Mode_IN;
    motion_sensors_pir_and_mw_pins_config.GPIO_Speed = GPIO_Speed_Level_1; // 2 MHz
-   motion_sensors_pir_and_mw_pins_config.GPIO_PuPd = GPIO_PuPd_NOPULL;
+   motion_sensors_pir_and_mw_pins_config.GPIO_PuPd = GPIO_PuPd_UP;
    GPIO_Init(PIR_LED_1_PORT, &motion_sensors_pir_and_mw_pins_config);
    motion_sensors_pir_and_mw_pins_config.GPIO_Pin = MW_LED_1_PIN;
    GPIO_Init(MW_LED_1_PORT, &motion_sensors_pir_and_mw_pins_config);
@@ -248,7 +273,7 @@ void pins_config() {
    immobilizer_led_pin_config.GPIO_Pin = IMMOBILIZER_LED_PIN;
    immobilizer_led_pin_config.GPIO_Mode = GPIO_Mode_IN;
    immobilizer_led_pin_config.GPIO_Speed = GPIO_Speed_Level_1; // 2 MHz
-   immobilizer_led_pin_config.GPIO_PuPd = GPIO_PuPd_NOPULL;
+   immobilizer_led_pin_config.GPIO_PuPd = GPIO_PuPd_DOWN;
    GPIO_Init(IMMOBILIZER_LED_PORT, &immobilizer_led_pin_config);
 }
 
@@ -386,6 +411,7 @@ void external_interrupt_config() {
 }
 
 void send_usard_data(char *string) {
+   reset_flag(&general_flags_g, USART_TRANSFER_COMPLETE_FLAG);
    clear_usart_data_received_buffer();
    DMA_Cmd(USART1_TX_DMA_CHANNEL, DISABLE);
    unsigned short bytes_to_send = get_string_length(string);

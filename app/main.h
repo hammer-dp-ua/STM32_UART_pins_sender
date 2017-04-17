@@ -17,7 +17,8 @@
 #define USART1_TDR_ADDRESS (unsigned int)(&(USART1->TDR))
 
 // General flags
-#define USART_DATA_RECEIVED_FLAG    1
+#define USART_DATA_RECEIVED_FLAG          1
+#define USART_TRANSFER_COMPLETE_FLAG      2
 
 // Pins interrupts flags
 #define MOTION_SENSOR_1_PIN_INTERRUPT_FLAG      1

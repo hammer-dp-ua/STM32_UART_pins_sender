@@ -12,37 +12,17 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
-<part id="2"/>
-<part id="3"/>
-<part id="4"/>
-<part id="5"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
 <editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="Z:/USER/CoIDE/workspace/UART_pins_sender/app/main.c" title="main.c" tooltip="Z:/USER/CoIDE/workspace/UART_pins_sender/app/main.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/UART_pins_sender/main.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="7902" selectionTopPixel="4241"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5401" selectionTopPixel="2584"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.h" partName="main.h" path="Z:/USER/CoIDE/workspace/UART_pins_sender/app/main.h" title="main.h" tooltip="Z:/USER/CoIDE/workspace/UART_pins_sender/app/main.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/UART_pins_sender/main.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1421" selectionTopPixel="380"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f0xx_conf.h" partName="stm32f0xx_conf.h" path="Z:/USER/CoIDE/workspace/UART_pins_sender/app/stm32f0xx_conf.h" title="stm32f0xx_conf.h" tooltip="Z:/USER/CoIDE/workspace/UART_pins_sender/app/stm32f0xx_conf.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/UART_pins_sender/stm32f0xx_conf.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1678" selectionTopPixel="120"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f0xx_dma.h" partName="stm32f0xx_dma.h" path="Z:/USER/CoIDE/workspace/UART_pins_sender/components/stm32f0xx_dma.h" title="stm32f0xx_dma.h" tooltip="Z:/USER/CoIDE/workspace/UART_pins_sender/components/stm32f0xx_dma.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/UART_pins_sender/components/stm32f0xx_dma.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="43083" selectionTopPixel="10906"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f0xx.h" partName="stm32f0xx.h" path="Z:/USER/CoIDE/workspace/UART_pins_sender/components/stm32f0xx.h" title="stm32f0xx.h" tooltip="Z:/USER/CoIDE/workspace/UART_pins_sender/components/stm32f0xx.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/UART_pins_sender/components/stm32f0xx.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="13" selectionOffset="231917" selectionTopPixel="53789"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f0xx_gpio.h" partName="stm32f0xx_gpio.h" path="Z:/USER/CoIDE/workspace/UART_pins_sender/components/stm32f0xx_gpio.h" title="stm32f0xx_gpio.h" tooltip="Z:/USER/CoIDE/workspace/UART_pins_sender/components/stm32f0xx_gpio.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/UART_pins_sender/components/stm32f0xx_gpio.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="13" selectionOffset="2774" selectionTopPixel="1254"/>
+<editorState selectionHorizontalPixel="0" selectionLength="13" selectionOffset="2357" selectionTopPixel="1499"/>
 </editor>
 </editors>
 <views>
@@ -51,15 +31,15 @@
 <ExpressionKeySet ExpKeys="usart_data_received_buffer_g,piped_tasks_to_send_g,*current_character,"/>
 </viewState>
 </view>
-<view id="org.eclipse.ui.views.ProgressView" partName="Progress">
-<viewState/>
-</view>
 <view id="org.coocox.builder.ui.views.ProjectView" partName="Project">
 <viewState CommonNavigator.LINKING_ENABLED="0" horizontalPosition="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0" verticalPosition="0">
 <expanded>
 <element path="/UART_pins_sender"/>
 <element path="/UART_pins_sender/components"/>
 </expanded>
+<selection>
+<element path="/UART_pins_sender/components/stm32f0xx_exti.h"/>
+</selection>
 </viewState>
 </view>
 <view id="org.eclipse.debug.ui.RegisterView" partName="Registers"/>
@@ -116,12 +96,7 @@
 <fastViewBars>
 <fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@1acbb38" orientation="256" selectedTabId="org.eclipse.ui.console.ConsoleView" style="0">
 <fastViews>
-<view id="org.eclipse.ui.console.ConsoleView" ratio="0.32731137"/>
-</fastViews>
-</fastViewBar>
-<fastViewBar fastViewLocation="131072" id="org.eclipse.ui.internal.ViewStack@2d39e3" orientation="512" selectedTabId="org.eclipse.ui.views.ProgressView" style="0">
-<fastViews>
-<view id="org.eclipse.ui.views.ProgressView" ratio="0.3"/>
+<view id="org.eclipse.ui.console.ConsoleView" ratio="0.37407014"/>
 </fastViews>
 </fastViewBar>
 </fastViewBars>
@@ -279,163 +254,163 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/UART_pins_sender/main.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/UART_pins_sender/main.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/UART_pins_sender/components/stm32f0xx_dma.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/UART_pins_sender/stm32f0xx_conf.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/UART_pins_sender/main.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/UART_pins_sender/components/stm32f0xx_gpio.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/UART_pins_sender/components/stm32f0xx_dma.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/UART_pins_sender/components/stm32f0xx.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/UART_pins_sender/components/stm32f0xx_gpio.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/UART_pins_sender/main.h"/>
 </editors>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="2962" y="0"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="11199" y="14"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="527" y="0"/>
+<item historyLabel="main.h" index="1">
+<position info="not_deleted" x="1197" y="0"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="12887" y="0"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="11199" y="14"/>
 </item>
-<item historyLabel="main.h" index="0">
-<position info="not_deleted" x="2469" y="0"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="7327" y="0"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="12887" y="0"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="5061" y="0"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="3058" y="81"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="5777" y="0"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="2973" y="0"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="5462" y="0"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="11832" y="90"/>
+<item historyLabel="main.h" index="1">
+<position info="not_deleted" x="945" y="34"/>
 </item>
-<item historyLabel="main.h" index="0">
-<position info="not_deleted" x="2469" y="0"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="6694" y="0"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="11832" y="90"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="11830" y="0"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="12680" y="47"/>
-</item>
-<item historyLabel="main.h" index="0">
-<position info="not_deleted" x="2469" y="0"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="43" y="0"/>
-</item>
-<item historyLabel="stm32f0xx_dma.h" index="2">
-<position info="not_deleted" x="5334" y="21"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="43" y="0"/>
-</item>
-<item historyLabel="stm32f0xx_conf.h" index="3">
-<position info="not_deleted" x="1678" y="0"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="43" y="0"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="2962" y="0"/>
-</item>
-<item historyLabel="stm32f0xx_conf.h" index="3">
-<position info="not_deleted" x="1678" y="0"/>
-</item>
-<item historyLabel="main.h" index="0">
+<item historyLabel="main.c" index="0">
 <position/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="2962" y="0"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="16756" y="15"/>
 </item>
-<item historyLabel="main.c" index="1">
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="2367" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="2758" y="19"/>
+</item>
+<item historyLabel="main.h" index="1">
+<position info="not_deleted" x="1152" y="27"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="4586" y="0"/>
+</item>
+<item historyLabel="main.h" index="1">
+<position info="not_deleted" x="2091" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
 <position/>
 </item>
-<item historyLabel="main.c" index="1">
-<position/>
+<item historyLabel="stm32f0xx_gpio.h" index="2">
+<position info="not_deleted" x="3579" y="12"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="825" y="23"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="9150" y="0"/>
 </item>
-<item historyLabel="main.h" index="0">
-<position info="not_deleted" x="702" y="0"/>
+<item historyLabel="stm32f0xx_gpio.h" index="2">
+<position info="not_deleted" x="3607" y="14"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="2953" y="0"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="4476" y="0"/>
 </item>
-<item historyLabel="main.h" index="0">
-<position info="not_deleted" x="1057" y="11"/>
+<item historyLabel="main.h" index="1">
+<position info="not_deleted" x="1757" y="19"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="2953" y="0"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="4602" y="0"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="2813" y="0"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="10625" y="0"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="43" y="0"/>
+<item historyLabel="main.h" index="1">
+<position info="not_deleted" x="1742" y="5"/>
 </item>
-<item historyLabel="main.h" index="0">
-<position info="not_deleted" x="1421" y="0"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="5741" y="0"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="2870" y="36"/>
+<item historyLabel="main.h" index="1">
+<position info="not_deleted" x="1777" y="10"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="738" y="0"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="5741" y="0"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="2566" y="0"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="9110" y="11"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="2564" y="0"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="566" y="0"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="534" y="26"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="673" y="0"/>
-</item>
-<item historyLabel="stm32f0xx_dma.h" index="4">
-<position info="not_deleted" x="42851" y="0"/>
-</item>
-<item historyLabel="stm32f0xx.h" index="5">
-<position info="not_deleted" x="231441" y="13"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="598" y="0"/>
-</item>
-<item historyLabel="stm32f0xx_dma.h" index="4">
-<position info="not_deleted" x="43081" y="0"/>
-</item>
-<item historyLabel="stm32f0xx.h" index="5">
-<position info="not_deleted" x="231917" y="13"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="597" y="0"/>
-</item>
-<item historyLabel="stm32f0xx_dma.h" index="4">
+<item historyLabel="stm32f0xx_dma.h" index="3">
 <position info="not_deleted" x="43083" y="0"/>
 </item>
-<item historyLabel="stm32f0xx.h" index="5">
+<item historyLabel="stm32f0xx_dma.h" index="3">
+<position info="not_deleted" x="43040" y="11"/>
+</item>
+<item historyLabel="stm32f0xx.h" index="4">
 <position info="not_deleted" x="231917" y="13"/>
 </item>
-<item historyLabel="main.c" index="1">
-<position/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="678" y="11"/>
 </item>
-<item historyLabel="stm32f0xx_gpio.h" index="6">
-<position info="not_deleted" x="2774" y="13"/>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="753" y="0"/>
 </item>
-<item active="true" historyLabel="main.c" index="1">
-<position/>
+<item historyLabel="main.h" index="1">
+<position info="not_deleted" x="719" y="28"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="722" y="0"/>
+</item>
+<item historyLabel="main.h" index="1">
+<position info="not_deleted" x="719" y="28"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="696" y="57"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="16756" y="15"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="6081" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="7179" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="7009" y="0"/>
+</item>
+<item historyLabel="main.h" index="1">
+<position info="not_deleted" x="2357" y="13"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="7009" y="0"/>
+</item>
+<item historyLabel="main.h" index="1">
+<position info="not_deleted" x="2357" y="13"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="7009" y="0"/>
+</item>
+<item historyLabel="stm32f0xx_gpio.h" index="5">
+<position info="not_deleted" x="3607" y="14"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="4602" y="0"/>
+</item>
+<item historyLabel="main.h" index="6">
+<position info="not_deleted" x="2357" y="13"/>
+</item>
+<item active="true" historyLabel="main.c" index="0">
+<position info="not_deleted" x="5038" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -444,6 +419,35 @@
 <actionBarAdvisor/>
 </window>
 <mruList>
+<file factoryID="org.coocox.builder.ui.persistent.PersistentElementFactory" id="org.coocox.welcome.ui.WelcomePage" name="" tooltip="">
+<persistable>
+<org.coocox.welcome.ui.WelcomePage/>
+</persistable>
+</file>
+<file factoryID="org.coocox.builder.ui.persistent.PersistentElementFactory" id="org.coocox.welcome.ui.WelcomePage" name="" tooltip="">
+<persistable>
+<org.coocox.welcome.ui.WelcomePage/>
+</persistable>
+</file>
+<file factoryID="org.coocox.builder.ui.persistent.PersistentElementFactory" id="org.coocox.welcome.ui.WelcomePage" name="" tooltip="">
+<persistable>
+<org.coocox.welcome.ui.WelcomePage/>
+</persistable>
+</file>
+<file factoryID="org.coocox.builder.ui.persistent.PersistentElementFactory" id="org.coocox.welcome.ui.WelcomePage" name="" tooltip="">
+<persistable>
+<org.coocox.welcome.ui.WelcomePage/>
+</persistable>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f0xx_misc.c" tooltip="UART_pins_sender/stm32f0xx_misc.c">
+<persistable path="/UART_pins_sender/stm32f0xx_misc.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f0xx_misc.h" tooltip="UART_pins_sender/components/stm32f0xx_misc.h">
+<persistable path="/UART_pins_sender/components/stm32f0xx_misc.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f0xx_exti.h" tooltip="UART_pins_sender/components/stm32f0xx_exti.h">
+<persistable path="/UART_pins_sender/components/stm32f0xx_exti.h"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f0xx_gpio.h" tooltip="UART_pins_sender/components/stm32f0xx_gpio.h">
 <persistable path="/UART_pins_sender/components/stm32f0xx_gpio.h"/>
 </file>
@@ -464,30 +468,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="system_stm32f0xx.c" tooltip="UART_pins_sender/system_stm32f0xx.c">
 <persistable path="/UART_pins_sender/system_stm32f0xx.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f0xx_syscfg.h" tooltip="UART_pins_sender/components/stm32f0xx_syscfg.h">
-<persistable path="/UART_pins_sender/components/stm32f0xx_syscfg.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="system_stm32f0xx.h" tooltip="UART_pins_sender/components/system_stm32f0xx.h">
-<persistable path="/UART_pins_sender/components/system_stm32f0xx.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f0xx_conf.h" tooltip="SPI_pins_sender/stm32f0xx_conf.h">
-<persistable path="/SPI_pins_sender/stm32f0xx_conf.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="system_stm32f0xx.h" tooltip="SPI_pins_sender/components/system_stm32f0xx.h">
-<persistable path="/SPI_pins_sender/components/system_stm32f0xx.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" name="startup_stm32f0xx.s" tooltip="SPI_pins_sender/components/startup_stm32f0xx.s">
-<persistable path="/SPI_pins_sender/components/startup_stm32f0xx.s"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f0xx_gpio.h" tooltip="SPI_pins_sender/components/stm32f0xx_gpio.h">
-<persistable path="/SPI_pins_sender/components/stm32f0xx_gpio.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f0xx.h" tooltip="SPI_pins_sender/components/stm32f0xx.h">
-<persistable path="/SPI_pins_sender/components/stm32f0xx.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="utils.h" tooltip="UART_pins_sender/utils.h">
-<persistable path="/UART_pins_sender/utils.h"/>
 </file>
 </mruList>
 </workbench>
