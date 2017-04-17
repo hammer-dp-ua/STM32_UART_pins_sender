@@ -2,8 +2,10 @@
 #include "main.h"
 
 unsigned int general_flags_g;
+unsigned int pins_interrupts_flags_g;
 
 volatile unsigned int send_usart_data_timer_g = TIMER14_10S;
+volatile unsigned int pins_interrupts_timer_g;
 
 volatile unsigned short usart_overrun_errors_counter_g;
 volatile unsigned short usart_idle_line_detection_counter_g;
@@ -41,15 +43,50 @@ void TIM3_IRQHandler() {
    if (usart_received_bytes_g > 1) {
       set_flag(&general_flags_g, USART_DATA_RECEIVED_FLAG);
    }
+   if (pins_interrupts_timer_g) {
+      pins_interrupts_timer_g--;
+   }
    usart_received_bytes_g = 0;
 }
 
+void set_pin_interrupt_flag(unsigned int flag) {
+   set_flag(&pins_interrupts_flags_g, flag);
+   pins_interrupts_timer_g = TIMER3_100MS;
+}
+
 void EXTI0_1_IRQHandler() {
+   if (EXTI_GetITStatus(MOTION_SENSOR_1_EXTI_LINE)) {
+      EXTI_ClearITPendingBit(MOTION_SENSOR_1_EXTI_LINE);
+      set_pin_interrupt_flag(MOTION_SENSOR_1_PIN_INTERRUPT_FLAG);
+   } else if (EXTI_GetITStatus(MOTION_SENSOR_3_EXTI_LINE)) {
+      EXTI_ClearITPendingBit(MOTION_SENSOR_3_EXTI_LINE);
+      set_pin_interrupt_flag(MOTION_SENSOR_3_PIN_INTERRUPT_FLAG);
+   }
+}
+
+void EXTI2_3_IRQHandler() {
+   if (EXTI_GetITStatus(IMMOBILIZER_LED_EXTI_LINE)) {
+      EXTI_ClearITPendingBit(IMMOBILIZER_LED_EXTI_LINE);
+      set_pin_interrupt_flag(IMMOBILIZER_LED_PIN_INTERRUPT_FLAG);
+   } else if (EXTI_GetITStatus(MOTION_SENSOR_2_EXTI_LINE)) {
+      EXTI_ClearITPendingBit(MOTION_SENSOR_2_EXTI_LINE);
+      set_pin_interrupt_flag(MOTION_SENSOR_2_PIN_INTERRUPT_FLAG);
+   }
 }
 
 void EXTI4_15_IRQHandler() {
-   if (EXTI_GetITStatus(FAN_SWITCH_EXTI_LINE)) {
-      EXTI_ClearITPendingBit(FAN_SWITCH_EXTI_LINE);
+   if (EXTI_GetITStatus(PIR_LED_1_EXTI_LINE)) {
+      EXTI_ClearITPendingBit(PIR_LED_1_EXTI_LINE);
+      set_pin_interrupt_flag(PIR_LED_1_PIN_INTERRUPT_FLAG);
+   } else if (EXTI_GetITStatus(MW_LED_1_EXTI_LINE)) {
+      EXTI_ClearITPendingBit(MW_LED_1_EXTI_LINE);
+      set_pin_interrupt_flag(MW_LED_1_PIN_INTERRUPT_FLAG);
+   } else if (EXTI_GetITStatus(PIR_LED_2_EXTI_LINE)) {
+      EXTI_ClearITPendingBit(PIR_LED_2_EXTI_LINE);
+      set_pin_interrupt_flag(PIR_LED_3_PIN_INTERRUPT_FLAG);
+   } else if (EXTI_GetITStatus(MW_LED_2_EXTI_LINE)) {
+      EXTI_ClearITPendingBit(MW_LED_2_EXTI_LINE);
+      set_pin_interrupt_flag(MW_LED_3_PIN_INTERRUPT_FLAG);
    }
 }
 
@@ -85,19 +122,44 @@ void USART1_IRQHandler() {
 
 int main() {
    RCC_APB2PeriphClockCmd(RCC_APB2Periph_DBGMCU, ENABLE);
-   IWDG_Config();
-   Clock_Config();
-   Pins_Config();
-   EXTERNAL_Interrupt_Config();
-   DMA_Config();
-   USART_Config();
-   TIMER3_Confing();
-   TIMER14_Confing();
+   iwdg_config();
+   clock_config();
+   pins_config();
+   external_interrupt_config();
+   dma_config();
+   usart_config();
+   timer3_confing();
+   timer14_confing();
 
    while (1) {
-      if (!send_usart_data_timer_g) {
-         send_usard_data("pin:0");
-         send_usart_data_timer_g = TIMER14_10S;
+      if (pins_interrupts_flags_g && !pins_interrupts_timer_g) {
+         if (read_flag(pins_interrupts_flags_g, MOTION_SENSOR_1_PIN_INTERRUPT_FLAG) &&
+               GPIO_ReadInputDataBit(MOTION_SENSOR_1_PORT, MOTION_SENSOR_1_PIN)) {
+            send_usard_data("pin:MOTION_SENSOR_1");
+         } else if (read_flag(pins_interrupts_flags_g, MOTION_SENSOR_3_PIN_INTERRUPT_FLAG) &&
+               GPIO_ReadInputDataBit(MOTION_SENSOR_3_PORT, MOTION_SENSOR_3_PIN)) {
+            send_usard_data("pin:MOTION_SENSOR_3");
+         } else if (read_flag(pins_interrupts_flags_g, IMMOBILIZER_LED_PIN_INTERRUPT_FLAG) &&
+               GPIO_ReadInputDataBit(IMMOBILIZER_LED_PORT, IMMOBILIZER_LED_PIN)) {
+            send_usard_data("pin:IMMOBILIZER_LED");
+         } else if (read_flag(pins_interrupts_flags_g, MOTION_SENSOR_2_PIN_INTERRUPT_FLAG) &&
+               GPIO_ReadInputDataBit(MOTION_SENSOR_2_PORT, MOTION_SENSOR_2_PIN)) {
+            send_usard_data("pin:MOTION_SENSOR_2");
+         } else if (read_flag(pins_interrupts_flags_g, PIR_LED_1_PIN_INTERRUPT_FLAG) &&
+               !GPIO_ReadInputDataBit(PIR_LED_1_PORT, PIR_LED_1_PIN)) {
+            send_usard_data("pin:PIR_LED_1");
+         } else if (read_flag(pins_interrupts_flags_g, MW_LED_1_PIN_INTERRUPT_FLAG) &&
+               !GPIO_ReadInputDataBit(MW_LED_1_PORT, MW_LED_1_PIN)) {
+            send_usard_data("pin:MW_LED_1");
+         } else if (read_flag(pins_interrupts_flags_g, PIR_LED_3_PIN_INTERRUPT_FLAG) &&
+               !GPIO_ReadInputDataBit(PIR_LED_3_PORT, PIR_LED_3_PIN)) {
+            send_usard_data("pin:PIR_LED_3");
+         } else if (read_flag(pins_interrupts_flags_g, MW_LED_3_PIN_INTERRUPT_FLAG) &&
+               !GPIO_ReadInputDataBit(MW_LED_3_PORT, MW_LED_3_PIN)) {
+            send_usard_data("pin:MW_LED_3");
+         }
+
+         pins_interrupts_flags_g = 0;
       }
    }
 }
@@ -120,7 +182,7 @@ unsigned char is_usart_response_contains_elements(char *data_to_be_contained[], 
    return 1;
 }
 
-void IWDG_Config() {
+void iwdg_config() {
    DBGMCU_APB1PeriphConfig(DBGMCU_IWDG_STOP, ENABLE);
 
    IWDG_Enable();
@@ -131,7 +193,7 @@ void IWDG_Config() {
    while (IWDG_GetFlagStatus(IWDG_FLAG_RVU) == SET);
 }
 
-void Clock_Config() {
+void clock_config() {
    RCC_SYSCLKConfig(RCC_SYSCLKSource_HSI);
    RCC_PLLCmd(DISABLE);
    while(RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == SET);
@@ -152,13 +214,13 @@ void init_pin_as_output(GPIO_TypeDef* GPIOx, unsigned int pin) {
    GPIO_Init(GPIOx, &GPIO_InitType);
 }
 
-void Pins_Config() {
+void pins_config() {
    // Connect BOOT0 directly to ground, RESET to VDD with a resistor
 
    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB, ENABLE);
 
    GPIO_InitTypeDef ports_default_config;
-   ports_default_config.GPIO_Pin = GPIO_Pin_All & ~(GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_9 | GPIO_Pin_10); // PA13, PA14 - Debugger pins
+   ports_default_config.GPIO_Pin = GPIO_Pin_All & ~(GPIO_Pin_13 | GPIO_Pin_14); // PA13, PA14 - Debugger pins
    ports_default_config.GPIO_Mode = GPIO_Mode_IN;
    ports_default_config.GPIO_Speed = GPIO_Speed_Level_1; // 2 MHz
    ports_default_config.GPIO_PuPd = GPIO_PuPd_UP;
@@ -168,6 +230,26 @@ void Pins_Config() {
    GPIO_Init(GPIOB, &ports_default_config);
 
    GPIO_Init(GPIOF, &ports_default_config);
+
+   GPIO_InitTypeDef motion_sensors_pir_and_mw_pins_config;
+   motion_sensors_pir_and_mw_pins_config.GPIO_Pin = PIR_LED_1_PIN;
+   motion_sensors_pir_and_mw_pins_config.GPIO_Mode = GPIO_Mode_IN;
+   motion_sensors_pir_and_mw_pins_config.GPIO_Speed = GPIO_Speed_Level_1; // 2 MHz
+   motion_sensors_pir_and_mw_pins_config.GPIO_PuPd = GPIO_PuPd_NOPULL;
+   GPIO_Init(PIR_LED_1_PORT, &motion_sensors_pir_and_mw_pins_config);
+   motion_sensors_pir_and_mw_pins_config.GPIO_Pin = MW_LED_1_PIN;
+   GPIO_Init(MW_LED_1_PORT, &motion_sensors_pir_and_mw_pins_config);
+   motion_sensors_pir_and_mw_pins_config.GPIO_Pin = PIR_LED_3_PIN;
+   GPIO_Init(PIR_LED_3_PORT, &motion_sensors_pir_and_mw_pins_config);
+   motion_sensors_pir_and_mw_pins_config.GPIO_Pin = MW_LED_3_PIN;
+   GPIO_Init(MW_LED_3_PORT, &motion_sensors_pir_and_mw_pins_config);
+
+   GPIO_InitTypeDef immobilizer_led_pin_config;
+   immobilizer_led_pin_config.GPIO_Pin = IMMOBILIZER_LED_PIN;
+   immobilizer_led_pin_config.GPIO_Mode = GPIO_Mode_IN;
+   immobilizer_led_pin_config.GPIO_Speed = GPIO_Speed_Level_1; // 2 MHz
+   immobilizer_led_pin_config.GPIO_PuPd = GPIO_PuPd_NOPULL;
+   GPIO_Init(IMMOBILIZER_LED_PORT, &immobilizer_led_pin_config);
 }
 
 /**
@@ -175,7 +257,7 @@ void Pins_Config() {
  * Timer time to be sure the frame is ended Tt = Tfr + 0.5 * Tfr
  * Frequency = 16Mhz, USART_BAUD_RATE = 115200. Tt = 0.13ms
  */
-void TIMER3_Confing() {
+void timer3_confing() {
    DBGMCU_APB1PeriphConfig(DBGMCU_TIM3_STOP, ENABLE);
    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
 
@@ -195,7 +277,7 @@ void TIMER3_Confing() {
 /**
  * 0.0983s with 16MHz clock
  */
-void TIMER14_Confing() {
+void timer14_confing() {
    DBGMCU_APB1PeriphConfig(DBGMCU_TIM14_STOP, ENABLE);
    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM14, ENABLE);
 
@@ -213,7 +295,7 @@ void TIMER14_Confing() {
    TIM_Cmd(TIM14, ENABLE);
 }
 
-void DMA_Config() {
+void dma_config() {
    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1 , ENABLE);
 
    // USART DMA config
@@ -237,15 +319,15 @@ void DMA_Config() {
    DMA_Cmd(USART1_TX_DMA_CHANNEL, ENABLE);
 }
 
-void USART_Config() {
+void usart_config() {
    // For USART1
    GPIO_InitTypeDef usart_pins_config;
-   usart_pins_config.GPIO_Pin = GPIO_Pin_9;
+   usart_pins_config.GPIO_Pin = USART_TX_PIN;
    usart_pins_config.GPIO_PuPd = GPIO_PuPd_NOPULL;
    usart_pins_config.GPIO_Mode = GPIO_Mode_AF;
-   usart_pins_config.GPIO_OType = GPIO_OType_PP;
-   GPIO_Init(GPIOA, &usart_pins_config);
-   GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_1);
+   usart_pins_config.GPIO_OType = GPIO_OType_PP; // GPIO_OType_OD for USART RX
+   GPIO_Init(USART_TX_PORT, &usart_pins_config);
+   GPIO_PinAFConfig(USART_TX_PORT, GPIO_PinSource9, GPIO_AF_1);
    //GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_1);
 
    RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
@@ -272,22 +354,35 @@ void USART_Config() {
    USART_Cmd(USART1, ENABLE);
 }
 
-void EXTERNAL_Interrupt_Config() {
+void external_interrupt_config() {
    RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
-   SYSCFG_EXTILineConfig(FAN_SWITCH_EXTI_PORT_SOURCE, FAN_SWITCH_EXTI_PIN_SOURCE);
 
-   EXTI_InitTypeDef EXTI_InitStructure;
-   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
-   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-   EXTI_InitStructure.EXTI_Line = FAN_SWITCH_EXTI_LINE;
-   EXTI_Init(&EXTI_InitStructure);
+   SYSCFG_EXTILineConfig(IMMOBILIZER_LED_EXTI_PORT_SOURCE, IMMOBILIZER_LED_EXTI_PIN_SOURCE);
+   SYSCFG_EXTILineConfig(MOTION_SENSOR_1_EXTI_PORT_SOURCE, MOTION_SENSOR_1_EXTI_PIN_SOURCE);
+   SYSCFG_EXTILineConfig(PIR_LED_1_EXTI_PORT_SOURCE, PIR_LED_1_EXTI_PIN_SOURCE);
+   SYSCFG_EXTILineConfig(MW_LED_1_EXTI_PORT_SOURCE, MW_LED_1_EXTI_PIN_SOURCE);
+   SYSCFG_EXTILineConfig(MOTION_SENSOR_2_EXTI_PORT_SOURCE, MOTION_SENSOR_2_EXTI_PIN_SOURCE);
+   SYSCFG_EXTILineConfig(MOTION_SENSOR_3_EXTI_PORT_SOURCE, MOTION_SENSOR_3_EXTI_PIN_SOURCE);
+   SYSCFG_EXTILineConfig(PIR_LED_3_EXTI_PORT_SOURCE, PIR_LED_3_EXTI_PIN_SOURCE);
+   SYSCFG_EXTILineConfig(MW_LED_3_EXTI_PORT_SOURCE, MW_LED_3_EXTI_PIN_SOURCE);
 
-   NVIC_InitTypeDef NVIC_InitTypeInitStructure;
-   NVIC_InitTypeInitStructure.NVIC_IRQChannelPriority = 3;
-   NVIC_InitTypeInitStructure.NVIC_IRQChannelCmd = ENABLE;
-   NVIC_InitTypeInitStructure.NVIC_IRQChannel = FAN_SWITCH_NVIC_IRQChannel;
-   NVIC_Init(&NVIC_InitTypeInitStructure);
+   EXTI_InitTypeDef exti_init_structure;
+   exti_init_structure.EXTI_Mode = EXTI_Mode_Interrupt;
+   exti_init_structure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+   exti_init_structure.EXTI_LineCmd = ENABLE;
+   exti_init_structure.EXTI_Line = IMMOBILIZER_LED_EXTI_LINE | MOTION_SENSOR_1_EXTI_LINE | PIR_LED_1_EXTI_LINE |
+         MW_LED_1_EXTI_LINE | MOTION_SENSOR_2_EXTI_LINE | MOTION_SENSOR_3_EXTI_LINE | PIR_LED_3_EXTI_LINE | MW_LED_3_EXTI_LINE;
+   EXTI_Init(&exti_init_structure);
+
+   NVIC_InitTypeDef nvic_init_type_structure;
+   nvic_init_type_structure.NVIC_IRQChannelPriority = 3;
+   nvic_init_type_structure.NVIC_IRQChannelCmd = ENABLE;
+   nvic_init_type_structure.NVIC_IRQChannel = EXTI0_1_IRQn;
+   NVIC_Init(&nvic_init_type_structure);
+   nvic_init_type_structure.NVIC_IRQChannel = EXTI2_3_IRQn;
+   NVIC_Init(&nvic_init_type_structure);
+   nvic_init_type_structure.NVIC_IRQChannel = EXTI4_15_IRQn;
+   NVIC_Init(&nvic_init_type_structure);
 }
 
 void send_usard_data(char *string) {
