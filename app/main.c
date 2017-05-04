@@ -151,7 +151,7 @@ int main() {
          } else if (read_flag(pins_interrupts_flags_g, IMMOBILIZER_LED_PIN_INTERRUPT_FLAG)) {
             reset_flag(&pins_interrupts_flags_g, IMMOBILIZER_LED_PIN_INTERRUPT_FLAG);
 
-            if (GPIO_ReadInputDataBit(IMMOBILIZER_LED_PORT, IMMOBILIZER_LED_PIN)) {
+            if (!GPIO_ReadInputDataBit(IMMOBILIZER_LED_PORT, IMMOBILIZER_LED_PIN)) {
                send_usard_data("pin:IMMOBILIZER_LED");
             }
          } else if (read_flag(pins_interrupts_flags_g, MOTION_SENSOR_2_PIN_INTERRUPT_FLAG)) {
@@ -273,7 +273,7 @@ void pins_config() {
    immobilizer_led_pin_config.GPIO_Pin = IMMOBILIZER_LED_PIN;
    immobilizer_led_pin_config.GPIO_Mode = GPIO_Mode_IN;
    immobilizer_led_pin_config.GPIO_Speed = GPIO_Speed_Level_1; // 2 MHz
-   immobilizer_led_pin_config.GPIO_PuPd = GPIO_PuPd_DOWN;
+   immobilizer_led_pin_config.GPIO_PuPd = GPIO_PuPd_UP;
    GPIO_Init(IMMOBILIZER_LED_PORT, &immobilizer_led_pin_config);
 }
 

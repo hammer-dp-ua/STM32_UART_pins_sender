@@ -55,7 +55,7 @@
 #define IMMOBILIZER_LED_EXTI_LINE EXTI_Line3
 #define IMMOBILIZER_LED_NVIC_IRQChannel EXTI2_3_IRQn
 // The first motion sensor from the street
-#define MOTION_SENSOR_1_PIN GPIO_Pin_0
+#define MOTION_SENSOR_1_PIN GPIO_Pin_0 // White
 #define MOTION_SENSOR_1_PORT GPIOA
 #define MOTION_SENSOR_1_EXTI_PIN_SOURCE EXTI_PinSource0
 #define MOTION_SENSOR_1_EXTI_PORT_SOURCE EXTI_PortSourceGPIOA
@@ -74,14 +74,14 @@
 #define MW_LED_1_EXTI_LINE EXTI_Line11
 #define MW_LED_1_NVIC_IRQChannel EXTI4_15_IRQn
 // Second motion sensor from the street. Without microwave detector
-#define MOTION_SENSOR_2_PIN GPIO_Pin_2
+#define MOTION_SENSOR_2_PIN GPIO_Pin_2 // White
 #define MOTION_SENSOR_2_PORT GPIOA
 #define MOTION_SENSOR_2_EXTI_PIN_SOURCE EXTI_PinSource2
 #define MOTION_SENSOR_2_EXTI_PORT_SOURCE EXTI_PortSourceGPIOA
 #define MOTION_SENSOR_2_EXTI_LINE EXTI_Line2
 #define MOTION_SENSOR_2_NVIC_IRQChannel EXTI2_3_IRQn
 // Third motion sensor from the street
-#define MOTION_SENSOR_3_PIN GPIO_Pin_1
+#define MOTION_SENSOR_3_PIN GPIO_Pin_1 // White
 #define MOTION_SENSOR_3_PORT GPIOA
 #define MOTION_SENSOR_3_EXTI_PIN_SOURCE EXTI_PinSource1
 #define MOTION_SENSOR_3_EXTI_PORT_SOURCE EXTI_PortSourceGPIOA
