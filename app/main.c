@@ -4,7 +4,7 @@
 unsigned int general_flags_g;
 unsigned int pins_interrupts_flags_g;
 
-volatile unsigned int send_usart_data_timer_g = TIMER14_10S;
+volatile unsigned int usart_data_sending_interval_timer_g;
 volatile unsigned int pins_interrupts_timer_g;
 
 volatile unsigned short usart_overrun_errors_counter_g;
@@ -31,10 +31,6 @@ void DMA1_Channel1_IRQHandler() {
 
 void TIM14_IRQHandler() {
    TIM_ClearITPendingBit(TIM14, TIM_IT_Update);
-
-   if (send_usart_data_timer_g) {
-      send_usart_data_timer_g--;
-   }
 }
 
 void TIM3_IRQHandler() {
@@ -46,6 +42,9 @@ void TIM3_IRQHandler() {
    }
    if (pins_interrupts_timer_g) {
       pins_interrupts_timer_g--;
+   }
+   if (usart_data_sending_interval_timer_g) {
+      usart_data_sending_interval_timer_g--;
    }
    usart_received_bytes_g = 0;
 }
@@ -130,12 +129,15 @@ int main() {
    dma_config();
    usart_config();
    timer3_confing();
-   timer14_confing();
+   //timer14_confing();
+
+   IWDG_ReloadCounter();
 
    set_flag(&general_flags_g, USART_TRANSFER_COMPLETE_FLAG);
 
    while (1) {
-      if (pins_interrupts_flags_g && !pins_interrupts_timer_g && read_flag(general_flags_g, USART_TRANSFER_COMPLETE_FLAG)) {
+      if (pins_interrupts_flags_g && !pins_interrupts_timer_g &&
+            read_flag(general_flags_g, USART_TRANSFER_COMPLETE_FLAG) && !usart_data_sending_interval_timer_g) {
          if (read_flag(pins_interrupts_flags_g, MOTION_SENSOR_1_PIN_INTERRUPT_FLAG)) {
             reset_flag(&pins_interrupts_flags_g, MOTION_SENSOR_1_PIN_INTERRUPT_FLAG);
 
@@ -187,6 +189,8 @@ int main() {
          }
       }
    }
+
+   IWDG_ReloadCounter();
 }
 
 unsigned char is_usart_response_contains_element(char string_to_be_contained[]) {
@@ -412,6 +416,7 @@ void external_interrupt_config() {
 
 void send_usard_data(char *string) {
    reset_flag(&general_flags_g, USART_TRANSFER_COMPLETE_FLAG);
+   usart_data_sending_interval_timer_g = TIMER3_500MS;
    clear_usart_data_received_buffer();
    DMA_Cmd(USART1_TX_DMA_CHANNEL, DISABLE);
    unsigned short bytes_to_send = get_string_length(string);
